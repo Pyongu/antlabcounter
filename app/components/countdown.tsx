@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 interface CountdownTimerProps {
   startMinutes: number; // Total starting time in minutes
@@ -17,7 +17,9 @@ export default function CountdownTimer({ startMinutes }: CountdownTimerProps) {
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(interval);
-          playSound();
+          audioRef.current?.play().catch((err) => {
+            console.warn("Audio playback failed:", err);
+          });
           return 0;
         }
         return prev - 1;
@@ -32,9 +34,15 @@ export default function CountdownTimer({ startMinutes }: CountdownTimerProps) {
     const s = seconds % 60;
     return `${m}:${s.toString().padStart(2, "0")}`;
   };
-
+  
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  
   const handleClick = () => {
     if (!isRunning && timeLeft > 0) {
+      if (!audioRef.current) {
+        audioRef.current = new Audio("/alarm_sound.wav");
+        audioRef.current.load(); // optional: force preload
+      }
       setIsRunning(true);
     }
   };
