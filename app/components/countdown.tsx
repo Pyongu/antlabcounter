@@ -17,6 +17,7 @@ export default function CountdownTimer({ startMinutes }: CountdownTimerProps) {
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(interval);
+          playSound();
           return 0;
         }
         return prev - 1;
@@ -37,6 +38,10 @@ export default function CountdownTimer({ startMinutes }: CountdownTimerProps) {
       setIsRunning(true);
     }
   };
+
+  const playSound = () => {
+    new Audio("/alarm_sound.wav").play()
+  }
 
   return (
     <div
