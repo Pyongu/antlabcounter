@@ -2,18 +2,33 @@
 
 import React, { useState } from "react";
 
-export default function Counter() {
+export default function Counter({ label }: { label?: string }) {
   const [count, setCount] = useState(0);
 
-  const handleIncrement = () => setCount(count + 1);
+  const handleIncrement = () => {
+    setCount(count + 1);
+    // const audio = new Audio("/beep.mp3");
+    // audio.play().catch((err) => {
+    //   console.warn("Audio playback failed:", err)});
+
+    // Try to vibrate. If not supported, fall back to beep.
+    if ("vibrate" in navigator) {
+      navigator.vibrate(200);
+    } else {
+      const audio = new Audio("/beep.mp3");
+      audio.play().catch((err) => {
+        console.warn("Audio playback failed:", err);
+      });
+    }
+  };
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center space-y-2">
-      <span className="text-3xl text-green-600 font-mono">Label</span>
       <div
         onClick={handleIncrement}
-        className="w-full h-full flex items-center justify-center bg-white rounded-xl shadow-md cursor-pointer select-none active:bg-green-200 transition"
+        className="w-full h-full flex flex-col items-center justify-center bg-white rounded-xl shadow-md cursor-pointer select-none active:bg-green-200 transition p-4"
       >
+        <span className="text-xl text-green-800 font-mono mb-1">{label}</span>
         <span className="text-5xl font-mono text-blue-600">{count}</span>
       </div>
     </div>
