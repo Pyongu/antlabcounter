@@ -17,9 +17,7 @@ export default function Counter({ label }: { label?: string }) {
     //   console.warn("Audio playback failed:", err)});
 
     // Try to vibrate. If not supported, fall back to beep.
-    if ("vibrate" in navigator) {
-      navigator.vibrate(200);
-    } else if (audio.current) {
+    if (audio.current) {
       audio.current.currentTime = 0; // rewind if already playing
       audio.current.play().catch((err) => {
         console.warn("Audio playback failed:", err);
