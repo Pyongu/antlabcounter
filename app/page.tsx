@@ -4,14 +4,14 @@ import CountdownTimer from "./components/countdown";
 
 export default function Home() {
   const labels = [
-    "Pogo Enter",
-    "Other Enter",
-    "Other Enter",
     "Pogo In",
-    "Pogo Exit",
-    "Other Exit",
-    "Other Exit",
-    "Pogo Exit"
+    "Other In",
+    "Other In",
+    "Pogo In",
+    "Pogo Out",
+    "Other Out",
+    "Other Out",
+    "Pogo Out"
   ];
 
   return (
